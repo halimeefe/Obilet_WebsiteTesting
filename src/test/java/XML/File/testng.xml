@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+
+<suite name="CrossBrowserTestSuite"
+       parallel="tests" thread-count="3">
+
+    <test name="ObiletChrome">
+        <parameter name="browserTipi" value="chrome"></parameter>
+
+        <classes>
+            <class name="Runners.Cross_BrowserTesting"></class>
+        </classes>
+
+    </test>
+
+    <test name="ObiletFirefox">
+        <parameter name="browserTipi" value="firefox"></parameter>
+
+        <classes>
+            <class name="Runners.Cross_BrowserTesting"></class>
+        </classes>
+
+    </test>
+
+    <test name="ObiletEdge">
+        <parameter name="browserTipi" value="edge"></parameter>
+
+        <classes>
+            <class name="Runners.Cross_BrowserTesting"></class>
+        </classes>
+
+    </test>
+
+
+
+</suite>
+
+
+

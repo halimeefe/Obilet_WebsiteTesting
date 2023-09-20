@@ -1,0 +1,33 @@
+
+
+ PROJE ADI: Obilet Website Automation Test Projesi
+
+ KULLANILAN TEKNOLOJİLER :
+
+CUCUMBER BDD :Senaryo yönetimi ve test raporlama.
+SELENIUM WEBDRİVER :Web otomasyon testleri için kullanılmıştır.
+APACHE POI : Excel verilerini okuma ve yazma işlemleri için kullanılmıştır.
+TESTNG : Test senaryolarının yönetimi ve cross-browser testi için kullanılmıştır.
+XML : Cross browser testini yönetmek için kullanıldı.
+Java : Proje JAVA OOP prensibine uygun olarak kodlandı.
+ExtentReports : Raporlama aracı olark kullanıldı ve test sonuçları görselleştirildi.
+
+
+PROJE AMAÇLARI:
+
+Otobüs biletlerini satın almadan önce boş koltukların numaralarını belirlemek.
+Boş koltuk numaralarını Excel dosyasına kaydetmek.
+Test senaryolarını Cucumber ile yazmak ve senaryo adımlarını otomatikleştirmek.
+Cross-browser testler kullanarak farklı tarayıcılarda testlerin çalışmasını sağlamak.
+Her test senaryosu için ekran görüntüleri (screenshot) ve PDF raporları alarak test sonuçlarını dokümantasyonunu sağlamak
+
+
+
+SONUÇLAR:
+
+Otomatik testler başarılı bir şekilde otobüs biletlerinin boş koltuk numaralarını belirler ve Excel dosyasına kaydeder.
+Farklı tarayıcılarda (örneğin Chrome, Firefox, Edge) testler başarıyla çalışır.
+Her test senaryosu için ekran görüntüleri ve PDF raporları alınır ve saklanır.
+
+
+
