@@ -125,30 +125,55 @@ public class BusCategory_Steps {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.available.active.not-single-seat")));
 
-        List<WebElement> emptySeats = PageDriver.getDriver().findElements(By.cssSelector("[class='available active not-single-seat']"));
+        List<WebElement> notSingleSeats = PageDriver.getDriver().findElements(By.cssSelector("a.available.active.not-single-seat"));
+        List<WebElement> singleSeats = PageDriver.getDriver().findElements(By.cssSelector("a.available.active.single-seat"));
 
-        // Boş koltuk numaralarını ve elementlerini saklamak için bir liste
-        List<String> seatNumbers = new ArrayList<>();
+        // Boş koltuk numaralarını ve elementlerini saklamak için iki liste
+        List<String> notSingleSeatNumbers = new ArrayList<>();
+        List<String> singleSeatsNumbers = new ArrayList<>();
 
-        for (WebElement emptySeat : emptySeats) {
+        for (WebElement seat : notSingleSeats) {
+            // JavaScript ile koltuk numarası alındı
+            String seatNumbers = (String) ((JavascriptExecutor) PageDriver.getDriver()).executeScript(
+                    "return arguments[0].querySelector('.s-seat-n').textContent;", seat); // koltuk numaralarının elementi (.s-seat-n)
+
+            // Çiftli koltuklar listeye eklendi
+            notSingleSeatNumbers.add(seatNumbers);
+        }
+
+        for (WebElement seat : singleSeats) {
             // JavaScript ile koltuk numarasını al
             String seatNumber = (String) ((JavascriptExecutor) PageDriver.getDriver()).executeScript(
-                    "return arguments[0].querySelector('.s-seat-n').textContent;", emptySeat); // boş koltuk numaralarının elementi (.s-seat-n)
-            seatNumbers.add(seatNumber);
+                    "return arguments[0].querySelector('.s-seat-n').textContent;", seat);
+
+            // Tekli koltukları listeye ekle
+            singleSeatsNumbers.add(seatNumber);
         }
 
-        // Boş koltuk numaralarını Excel dosyasına eklemek için bir Workbook oluştur
+      // Excel dosyasına tekli ve çiftli boş koltuk numaralarını ve elementlerini eklemek için bir Workbook
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Boş Koltuklar");
-
         int rowNum = 0;
-        for (String seatNumber : seatNumbers) {
-            // Excel sayfasına boş koltuk numarasını ekle
+
+      // Tekli boş koltukları Excel dosyasına ekle
+        for (int i = 0; i < singleSeatsNumbers.size(); i++) {
             Row row = sheet.createRow(rowNum++);
-            Cell cell = row.createCell(0);
-            cell.setCellValue("Boş Koltuk No: " + seatNumber);
+            Cell cellSeatDescription = row.createCell(0); // "A" sütunu için
+            cellSeatDescription.setCellValue("Tekli Boş Koltuk No:");
+            Cell cellSeatNumber = row.createCell(1); // "B" sütunu için
+            cellSeatNumber.setCellValue(singleSeatsNumbers.get(i));
+
         }
 
+        // Çiftli boş koltukları Excel dosyasına ekle
+        for (int i = 0; i < notSingleSeatNumbers.size(); i++) {
+            Row row = sheet.createRow(rowNum++);
+            Cell cellSeatDescription = row.createCell(0); // "A" sütunu
+            cellSeatDescription.setCellValue("Çiftli Boş Koltuk No:");
+            Cell cellSeatNumber = row.createCell(1); // "B" sütunu
+            cellSeatNumber.setCellValue(notSingleSeatNumbers.get(i));
+
+        }
         // Excel dosyasını kaydet
         try (FileOutputStream outputStream = new FileOutputStream("BoşKoltuklar.xlsx")) {
             workbook.write(outputStream);
@@ -159,6 +184,7 @@ public class BusCategory_Steps {
         System.out.println("Boş koltuk numaraları Excel dosyasına aktarıldı");
 
     }
+
 
     @When("Log out succesfully")
     public void logOutSuccesfully() {
